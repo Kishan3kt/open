@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OPEN Commodity Trading Platform</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f0f2f5;
+    }
+    header {
+      background: #003399;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 28px;
+    }
+    .container {
+      display: flex;
+      height: calc(100vh - 80px);
+    }
+    .image-section {
+      flex: 7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      flex-direction: column;
+    }
+    .image-stack img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .logo-img {
+      max-width: 120px;
+      margin-top: 10px;
+    }
+    .content-section {
+      flex: 3;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      border-left: 1px solid #ccc;
+      overflow-y: auto;
+    }
+    .module-content {
+      flex-grow: 1;
+    }
+    h2 {
+      color: #003399;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    p.description {
+      font-size: 14px;
+      font-style: italic;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    li {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    li strong {
+      font-weight: bold;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #003399;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #002277;
+    }
+    button:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <header>OPEN Commodity Trading Platform</header>
+  <div class="container">
+    <div class="image-section">
+      <div class="image-stack">
+        <img src="userflow.png" alt="User Workflow Diagram" />
+        <img src="logo.png" alt="Company Logo" class="logo-img" />
+      </div>
+    </div>
+    <div class="content-section">
+      <div class="module-content" id="moduleContent"></div>
+      <div class="nav-buttons">
+        <button onclick="prevModule()" id="prevBtn">Prev</button>
+        <button onclick="nextModule()" id="nextBtn">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+const modules = [{"title": "1. Register / Verify", "description": "All stakeholders go through a secure onboarding process:", "content": ["<strong>Digital Identity Creation:</strong> Each participant submits business details and undergoes KYC/AML verification.", "<strong>Document Upload & Validation:</strong> Business registration, compliance certificates, bank information, etc., are uploaded.", "<strong>Blockchain Identity Issuance:</strong> Verified users get a blockchain-backed digital identity for traceable actions.", "<strong>Role-Based Access Setup:</strong> Access privileges are defined (e.g., Buyer, Seller, Customs Broker).", "<strong>Reputation Ledger Initialization:</strong> Each verified entity begins with a transparent, zero-history rating on-chain."]}, {"title": "2. Commodity Management & Listings", "description": "Sellers tokenize and list their commodities for global visibility:", "content": ["<strong>Create Tokenized Lots:</strong> Sellers define specs like type (crude oil, copper), grade, volume, origin, and pricing hints.", "<strong>Metadata Recording:</strong> Listings are saved immutably on blockchain with ownership, location, and condition details.", "<strong>Inventory Management Integration:</strong> Tracks available stock across multiple storage locations or depots.", "<strong>Regulatory Tags & Labels:</strong> Regulatory compliance (e.g., REACH, ISO) are tagged per commodity type.", "<strong>Live Marketplace Syncing:</strong> Buyers can view, filter, and track availability in real time."]}, {"title": "3. Request for Quote (RFQ)", "description": "Buyers initiate interest with precise requirements:", "content": ["<strong>Custom Requirement Submission:</strong> Details like quantity, specs, currency, incoterms, inspection needs.", "<strong>Broadcast to Verified Sellers:</strong> Only eligible sellers are alerted instantly based on commodity filters.", "<strong>RFQ Timers & Bidding Windows:</strong> Time-bound validity allows sellers to respond within fixed periods.", "<strong>Pre-Negotiation Compliance Checks:</strong> System ensures request aligns with cross-border trade regulations.", "<strong>Quote Versioning:</strong> All revisions and responses are stored immutably on-chain."]}, {"title": "4. Bidding & Negotiate", "description": "Real-time negotiation between buyer and shortlisted sellers:", "content": ["<strong>Encrypted Bid Submission:</strong> Sellers provide price, delivery, and contract terms in secured format.", "<strong>Counter-Offer Mechanism:</strong> Buyers and sellers can propose modifications to achieve mutually agreeable terms.", "<strong>Live Chat / Messaging:</strong> In-platform communication tools with full audit trail.", "<strong>Auto-Scoring of Offers:</strong> AI can suggest best offers based on quality, past performance, etc.", "<strong>Agreement Lock-In:</strong> Final offer acceptance triggers smart contract initiation."]}, {"title": "5. Smart Contract & Escrow Funding", "description": "Digitally enforceable agreements secure the transaction:", "content": ["<strong>Auto-Generated Contract:</strong> Terms from negotiation are used to auto-generate blockchain smart contracts.", "<strong>Escrow Setup:</strong> Buyer deposits funds into escrow wallet.", "<strong>Condition-Based Release:</strong> Funds are auto-released upon successful delivery and quality checks.", "<strong>Failure Penalties:</strong> Non-compliance results in pre-defined penalties encoded into the contract.", "<strong>Immutable Contract Record:</strong> The contract is permanently stored on-chain for dispute resolution."]}, {"title": "6. Commodity Token Minting", "description": "Each commodity is linked to a digital representation:", "content": ["<strong>Token Generation:</strong> A unique token is minted representing a specific commodity lot.", "<strong>Link to Physical Asset:</strong> Tokens contain metadata: source, ownership, grade, inspection results.", "<strong>Transferability:</strong> Ownership of the token reflects ownership of the physical commodity.", "<strong>Fractional Ownership Support:</strong> Commodities can be split into tradeable units.", "<strong>Tracking Origin:</strong> Chain-of-custody is established for regulatory and ethical compliance."]}, {"title": "7. Insurance & Shipping", "description": "Protection and logistics are arranged in sync:", "content": ["<strong>Auto-Quote from Insurers:</strong> System requests and compares quotes from integrated insurers.", "<strong>Instant Policy Issuance:</strong> Upon payment, insurance policy is bound to token and shipment ID.", "<strong>Carrier Assignment:</strong> Logistic partners are selected, linked, and allocated delivery SLAs.", "<strong>Risk Classification:</strong> Premiums are calculated based on risk, origin, route, and commodity type.", "<strong>Smart Claim Trigger:</strong> In case of damage, claim trigger can be automated based on IoT alerts."]}, {"title": "8. In-Transit Tracking", "description": "Real-time tracking builds shipment confidence:", "content": ["<strong>IoT Integration:</strong> Real-time GPS, temperature, humidity sensors attached to shipment.", "<strong>Tamper-Proof Data Logging:</strong> IoT events logged directly to blockchain.", "<strong>Exception Alerts:</strong> Delays, diversions, or abnormalities raise alerts to stakeholders.", "<strong>Route Optimization AI:</strong> Suggested alternate routes if delays are predicted.", "<strong>ETA Updates:</strong> Dynamic visibility of estimated delivery time."]}, {"title": "9. Quality Inspection & Customs", "description": "Ensures the product meets expectations and legal clearance:", "content": ["<strong>Inspection Scheduling:</strong> Inspections are booked via authorized third-party agencies.", "<strong>Digital Certificates Issued:</strong> Test results and quality validation are issued on-chain.", "<strong>Customs Declarations:</strong> Integrated customs brokers initiate border clearance workflow.", "<strong>Country-Specific Compliance:</strong> Ensures adherence to laws like REACH, BIS, etc.", "<strong>Pass/Fail Protocols:</strong> Buyer can reject the shipment if inspection fails contract conditions."]}, {"title": "10. Delivery & Acceptance", "description": "Completion of physical handover:", "content": ["<strong>Last-Mile Coordination:</strong> Local warehouse/depot coordinates physical receipt.", "<strong>Buyer Confirmation:</strong> Acceptance or dispute is digitally acknowledged.", "<strong>Token Transfer Completion:</strong> Token is burned or transferred to buyer wallet.", "<strong>Trigger Payment Release:</strong> Escrow disburses funds to seller and other service providers.", "<strong>Delivery Proof:</strong> e-POD (Proof of Delivery) uploaded with timestamp and geotag."]}, {"title": "11. Settlement & Reconciliation", "description": "Financial settlement for all involved:", "content": ["<strong>Multi-Party Payouts:</strong> Platform settles funds for seller, insurer, shipper, etc.", "<strong>Transaction Reconciliation:</strong> Auto-matching of order, delivery, inspection, and payment.", "<strong>Currency Conversion (if needed):</strong> Multi-currency support via integrated payment gateways.", "<strong>Tax & Compliance Reporting:</strong> Generates export/import documents, invoices, tax reports.", "<strong>Ledger Finalization:</strong> Transaction marked as complete in blockchain ledger."]}, {"title": "12. Dispute & Arbitration", "description": "If disagreements arise:", "content": ["<strong>Initiate Dispute:</strong> Either party can raise a dispute within a defined window.", "<strong>Automated Evidence Collation:</strong> Platform assembles all logs, inspection data, and agreements.", "<strong>Escalation Rules:</strong> Smart contract defines if and when it moves to arbitration.", "<strong>Neutral Arbitrator Access:</strong> Regulator or platform-appointed arbitrators resolve issue.", "<strong>Judgement Execution:</strong> Ruling triggers conditional fund release or reversal."]}, {"title": "13. Ratings, Audit & Regulatory Reporting", "description": "Build trust through transparent history:", "content": ["<strong>Peer Review:</strong> Buyers and Sellers rate each other post-deal (timeliness, quality, trust).", "<strong>Immutable Audit Trail:</strong> Every step\u2014from registration to delivery\u2014is on-chain.", "<strong>Reputation Scoring:</strong> Algorithmically adjusts future visibility or privileges.", "<strong>Regulator Access:</strong> Authorities can audit trade history, inspections, and disputes.", "<strong>Trust Signal for Future Deals:</strong> Ratings impact trade eligibility and speed."]}];
+
+    let currentIndex = 0;
+    const moduleContent = document.getElementById("moduleContent");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function renderModule() {
+      const m = modules[currentIndex];
+      let html = `<h2>${m.title}</h2><p class='description'>${m.description}</p><ul>`;
+      m.content.forEach(pt => { html += `<li>${pt}</li>`; });
+      html += "</ul>";
+      moduleContent.innerHTML = html;
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === modules.length - 1;
+    }
+
+    function nextModule() {
+      if (currentIndex < modules.length - 1) {
+        currentIndex++;
+        renderModule();
+      }
+    }
+
+    function prevModule() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderModule();
+      }
+    }
+
+    renderModule();
+  </script>
+</body>
+</html>
